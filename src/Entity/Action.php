@@ -14,7 +14,7 @@ class Action
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $actionId = null;
+    private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     private ?string $typeAction = null;
@@ -23,7 +23,7 @@ class Action
     private ?string $description = null;
 
     #[ORM\ManyToOne(inversedBy: 'actions')]
-    private ?Promotion $promoId = null;
+    private ?Promotion $promo = null;
 
     #[ORM\OneToMany(targetEntity: ActionCondition::class, mappedBy: 'actionId')]
     private Collection $actionConditions;
@@ -33,9 +33,9 @@ class Action
         $this->actionConditions = new ArrayCollection();
     }
 
-    public function getActionId(): ?int
+    public function getId(): ?int
     {
-        return $this->actionId;
+        return $this->id;
     }
 
     public function getTypeAction(): ?string
@@ -62,14 +62,14 @@ class Action
         return $this;
     }
 
-    public function getPromoId(): ?Promotion
+    public function getPromo(): ?Promotion
     {
-        return $this->promoId;
+        return $this->promo;
     }
 
-    public function setPromoId(?Promotion $promoId): static
+    public function setPromo(?Promotion $promo): static
     {
-        $this->promoId = $promoId;
+        $this->promo = $promo;
 
         return $this;
     }
@@ -86,7 +86,7 @@ class Action
     {
         if (!$this->actionConditions->contains($actionCondition)) {
             $this->actionConditions->add($actionCondition);
-            $actionCondition->setActionId($this);
+            $actionCondition->setAction($this);
         }
 
         return $this;
@@ -96,8 +96,8 @@ class Action
     {
         if ($this->actionConditions->removeElement($actionCondition)) {
             // set the owning side to null (unless already changed)
-            if ($actionCondition->getActionId() === $this) {
-                $actionCondition->setActionId(null);
+            if ($actionCondition->getAction() === $this) {
+                $actionCondition->setAction(null);
             }
         }
 

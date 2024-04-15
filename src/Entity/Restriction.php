@@ -12,7 +12,7 @@ class Restriction
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $restrictionId = null;
+    private ?int $id = null;
 
     #[ORM\Column]
     private ?int $numberClientParticipation = null;
@@ -33,11 +33,11 @@ class Restriction
     private array $clientGeo = [];
 
     #[ORM\ManyToOne(inversedBy: 'restrictions')]
-    private ?Promotion $promoId = null;
+    private ?Promotion $promo = null;
 
-    public function getRestrictionId(): ?int
+    public function getId(): ?int
     {
-        return $this->restrictionId;
+        return $this->id;
     }
 
     public function getNumberClientParticipation(): ?int
@@ -112,14 +112,14 @@ class Restriction
         return $this;
     }
 
-    public function getPromoId(): ?Promotion
+    public function getPromo(): ?Promotion
     {
-        return $this->promoId;
+        return $this->promo;
     }
 
-    public function setPromoId(?Promotion $promoId): static
+    public function setPromo(?Promotion $promo): static
     {
-        $this->promoId = $promoId;
+        $this->promo = $promo;
 
         return $this;
     }

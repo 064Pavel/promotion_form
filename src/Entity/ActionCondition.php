@@ -12,7 +12,7 @@ class ActionCondition
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $actionConditionId = null;
+    private ?int $id = null;
 
     #[ORM\Column]
     private ?int $source = null;
@@ -45,11 +45,11 @@ class ActionCondition
     private array $payFromName = [];
 
     #[ORM\ManyToOne(inversedBy: 'actionConditions')]
-    private ?Action $actionId = null;
+    private ?Action $action = null;
 
-    public function getActionConditionId(): ?int
+    public function getId(): ?int
     {
-        return $this->actionConditionId;
+        return $this->id;
     }
 
     public function getSource(): ?int
@@ -172,14 +172,14 @@ class ActionCondition
         return $this;
     }
 
-    public function getActionId(): ?Action
+    public function getAction(): ?Action
     {
-        return $this->actionId;
+        return $this->action;
     }
 
-    public function setActionId(?Action $actionId): static
+    public function setAction(?Action $action): static
     {
-        $this->actionId = $actionId;
+        $this->action = $action;
 
         return $this;
     }

@@ -12,7 +12,7 @@ class GeneralPromoCode
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $generalPromoCodeId = null;
+    private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     private ?string $promoCode = null;
@@ -27,11 +27,11 @@ class GeneralPromoCode
     private ?int $promoAmount = null;
 
     #[ORM\ManyToOne(inversedBy: 'generalPromoCodes')]
-    private ?Promotion $promoId = null;
+    private ?Promotion $promo = null;
 
-    public function getGeneralPromoCodeId(): ?int
+    public function getId(): ?int
     {
-        return $this->generalPromoCodeId;
+        return $this->id;
     }
 
     public function getPromoCode(): ?string
@@ -82,14 +82,14 @@ class GeneralPromoCode
         return $this;
     }
 
-    public function getPromoId(): ?Promotion
+    public function getPromo(): ?Promotion
     {
-        return $this->promoId;
+        return $this->promo;
     }
 
-    public function setPromoId(?Promotion $promoId): static
+    public function setPromo(?Promotion $promo): static
     {
-        $this->promoId = $promoId;
+        $this->promo = $promo;
 
         return $this;
     }

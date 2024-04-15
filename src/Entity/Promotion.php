@@ -17,7 +17,7 @@ class Promotion
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $promoId = null;
+    private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     private ?string $name = null;
@@ -96,9 +96,9 @@ class Promotion
         $this->restrictions = new ArrayCollection();
     }
 
-    public function getPromoId(): ?int
+    public function getId(): ?int
     {
-        return $this->promoId;
+        return $this->id;
     }
 
     public function getName(): ?string
@@ -341,7 +341,7 @@ class Promotion
     {
         if (!$this->bonuses->contains($bonus)) {
             $this->bonuses->add($bonus);
-            $bonus->setPromoId($this);
+            $bonus->setPromo($this);
         }
 
         return $this;
@@ -351,8 +351,8 @@ class Promotion
     {
         if ($this->bonuses->removeElement($bonus)) {
             // set the owning side to null (unless already changed)
-            if ($bonus->getPromoId() === $this) {
-                $bonus->setPromoId(null);
+            if ($bonus->getPromo() === $this) {
+                $bonus->setPromo(null);
             }
         }
 
@@ -371,7 +371,7 @@ class Promotion
     {
         if (!$this->generalPromoCodes->contains($generalPromoCode)) {
             $this->generalPromoCodes->add($generalPromoCode);
-            $generalPromoCode->setPromoId($this);
+            $generalPromoCode->setPromo($this);
         }
 
         return $this;
@@ -381,8 +381,8 @@ class Promotion
     {
         if ($this->generalPromoCodes->removeElement($generalPromoCode)) {
             // set the owning side to null (unless already changed)
-            if ($generalPromoCode->getPromoId() === $this) {
-                $generalPromoCode->setPromoId(null);
+            if ($generalPromoCode->getPromo() === $this) {
+                $generalPromoCode->setPromo(null);
             }
         }
 
@@ -401,7 +401,7 @@ class Promotion
     {
         if (!$this->actions->contains($action)) {
             $this->actions->add($action);
-            $action->setPromoId($this);
+            $action->setPromo($this);
         }
 
         return $this;
@@ -411,8 +411,8 @@ class Promotion
     {
         if ($this->actions->removeElement($action)) {
             // set the owning side to null (unless already changed)
-            if ($action->getPromoId() === $this) {
-                $action->setPromoId(null);
+            if ($action->getPromo() === $this) {
+                $action->setPromo(null);
             }
         }
 
@@ -431,7 +431,7 @@ class Promotion
     {
         if (!$this->restrictions->contains($restriction)) {
             $this->restrictions->add($restriction);
-            $restriction->setPromoId($this);
+            $restriction->setPromo($this);
         }
 
         return $this;
@@ -441,8 +441,8 @@ class Promotion
     {
         if ($this->restrictions->removeElement($restriction)) {
             // set the owning side to null (unless already changed)
-            if ($restriction->getPromoId() === $this) {
-                $restriction->setPromoId(null);
+            if ($restriction->getPromo() === $this) {
+                $restriction->setPromo(null);
             }
         }
 

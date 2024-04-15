@@ -11,7 +11,7 @@ class Bonus
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $bonusId = null;
+    private ?int $id = null;
 
     #[ORM\Column]
     private ?int $bonusNumber = null;
@@ -20,11 +20,11 @@ class Bonus
     private ?int $bonusSum = null;
 
     #[ORM\ManyToOne(inversedBy: 'bonuses')]
-    private ?Promotion $promoId = null;
+    private ?Promotion $promo = null;
 
-    public function getBonusId(): ?int
+    public function getId(): ?int
     {
-        return $this->bonusId;
+        return $this->id;
     }
 
     public function getBonusNumber(): ?int
@@ -51,14 +51,14 @@ class Bonus
         return $this;
     }
 
-    public function getPromoId(): ?Promotion
+    public function getPromo(): ?Promotion
     {
-        return $this->promoId;
+        return $this->promo;
     }
 
-    public function setPromoId(?Promotion $promoId): static
+    public function setPromo(?Promotion $promo): static
     {
-        $this->promoId = $promoId;
+        $this->promo = $promo;
 
         return $this;
     }
