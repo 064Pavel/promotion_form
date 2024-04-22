@@ -5,7 +5,10 @@ services:
     ports:
       - 9000:9000
     volumes:
+      - ./docker/php-fpm/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
       - ./:/var/www:cached
+    environment:
+      - PHP_IDE_CONFIG=serverName=Docker
 
   nginx:
     build: './docker/nginx'

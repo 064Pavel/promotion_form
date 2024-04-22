@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ActionRepository::class)]
 class Action
@@ -17,15 +18,18 @@ class Action
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
     private ?string $typeAction = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank]
     private ?string $description = null;
 
     #[ORM\ManyToOne(inversedBy: 'actions')]
     private ?Promotion $promo = null;
 
-    #[ORM\OneToMany(targetEntity: ActionCondition::class, mappedBy: 'actionId')]
+    #[ORM\OneToMany(targetEntity: ActionCondition::class, mappedBy: 'action', cascade: ['remove', 'persist'])]
+    #[Assert\Valid]
     private Collection $actionConditions;
 
     public function __construct()

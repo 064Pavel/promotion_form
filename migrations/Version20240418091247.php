@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20240415094823 extends AbstractMigration
+final class Version20240418091247 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,12 +20,6 @@ final class Version20240415094823 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE SEQUENCE action_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
-        $this->addSql('CREATE SEQUENCE action_condition_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
-        $this->addSql('CREATE SEQUENCE bonus_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
-        $this->addSql('CREATE SEQUENCE general_promo_code_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
-        $this->addSql('CREATE SEQUENCE promotion_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
-        $this->addSql('CREATE SEQUENCE restriction_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE TABLE action (id INT NOT NULL, promo_id INT DEFAULT NULL, type_action VARCHAR(255) NOT NULL, description TEXT NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_47CC8C92D0C07AFF ON action (promo_id)');
         $this->addSql('CREATE TABLE action_condition (id INT NOT NULL, action_id INT DEFAULT NULL, source INT NOT NULL, partner_code INT NOT NULL, partner_type INT NOT NULL, product_code TEXT NOT NULL, product_category VARCHAR(255) NOT NULL, placement TEXT NOT NULL, activity_code INT NOT NULL, data_source TEXT NOT NULL, page_unit TEXT NOT NULL, pay_from_name TEXT NOT NULL, PRIMARY KEY(id))');
@@ -57,12 +51,6 @@ final class Version20240415094823 extends AbstractMigration
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE SCHEMA public');
-        $this->addSql('DROP SEQUENCE action_id_seq CASCADE');
-        $this->addSql('DROP SEQUENCE action_condition_id_seq CASCADE');
-        $this->addSql('DROP SEQUENCE bonus_id_seq CASCADE');
-        $this->addSql('DROP SEQUENCE general_promo_code_id_seq CASCADE');
-        $this->addSql('DROP SEQUENCE promotion_id_seq CASCADE');
-        $this->addSql('DROP SEQUENCE restriction_id_seq CASCADE');
         $this->addSql('ALTER TABLE action DROP CONSTRAINT FK_47CC8C92D0C07AFF');
         $this->addSql('ALTER TABLE action_condition DROP CONSTRAINT FK_19D09B5E9D32F035');
         $this->addSql('ALTER TABLE bonus DROP CONSTRAINT FK_9F987F7AD0C07AFF');

@@ -2,14 +2,15 @@
 
 namespace App\Entity;
 
-use App\Entity\Enum\CashbackType;
-use App\Entity\Enum\OrganisationType;
-use App\Entity\Enum\PromoType;
+use App\Entity\Type\CashbackType;
+use App\Entity\Type\OrganisationType;
+use App\Entity\Type\PromoType;
 use App\Repository\PromotionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PromotionRepository::class)]
 class Promotion
@@ -18,74 +19,109 @@ class Promotion
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Поле "name" не должно быть пустым')]
+    #[Assert\Length(max: 255, maxMessage: 'Поле "name" не должно превышать {{ limit }} символов')]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank(message: 'Поле "description" не должно быть пустым')]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Поле "partnerName" не должно быть пустым')]
+    #[Assert\Length(max: 255, maxMessage: 'Поле "partnerName" не должно превышать {{ limit }} символов')]
     private ?string $partnerName = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Поле "partnerLogo" не должно быть пустым')]
+    #[Assert\Url(message: 'Значение поля "partnerLogo" должно быть корректным URL')]
     private ?string $partnerLogo = null;
 
     #[ORM\Column]
+    #[Assert\NotNull(message: 'Поле "isCustom" не должно быть пустым')]
     private ?bool $isCustom = null;
 
     #[ORM\Column]
+    #[Assert\NotNull(message: 'Поле "isReferral" не должно быть пустым')]
     private ?bool $isReferral = null;
 
     #[ORM\Column]
+    #[Assert\NotNull(message: 'Поле "isRandom" не должно быть пустым')]
     private ?bool $isRandom = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
+    #[Assert\NotNull(message: 'Поле "randomSelectionDate" не должно быть пустым')]
+    #[Assert\GreaterThan("today", message: 'Дата должна быть больше или равна текущей дате')]
     private ?\DateTimeInterface $randomSelectionDate = null;
 
     #[ORM\Column]
+    #[Assert\NotNull(message: 'Поле "isGeneralPromoCode" не должно быть пустым')]
     private ?bool $isGeneralPromoCode = null;
 
-    #[ORM\Column(type: 'string', enumType: PromoType::class)]
-    private PromoType|null $promoType = null;
+    #[ORM\Column(type: 'string')]
+    #[Assert\Choice(choices: PromoType::CHOICES, message: 'Неверное значение для поля "promoType"')]
+    private ?string $promoType = null;
 
-    #[ORM\Column(type: 'string', enumType: CashbackType::class)]
-    private CashbackType|null $cashbackType = null;
+    #[ORM\Column(type: 'string')]
+    #[Assert\Choice(choices: CashbackType::CHOICES, message: 'Неверное значение для поля "cashbackType"')]
+    private ?string $cashbackType = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\PositiveOrZero(message: 'Значение поля "amountReward" должно быть положительным числом или нулем')]
     private ?int $amountReward = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\Range(notInRangeMessage: 'Значение поля "percentAmount" должно быть между {{ min }} и {{ max }}', min: 0, max: 100)]
     private ?int $percentAmount = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Поле "landingPageLink" не должно быть пустым')]
+    #[Assert\Url(message: 'Значение поля "landingPageLink" должно быть корректным URL')]
     private ?string $landingPageLink = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Поле "ruleLink" не должно быть пустым')]
+    #[Assert\Url(message: 'Значение поля "ruleLink" должно быть корректным URL')]
     private ?string $ruleLink = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $promoStartDate = null;
+    #[Assert\NotNull(message: 'Поле "promoStartDate" не должно быть пустым')]
+    #[Assert\LessThanOrEqual(
+        value: "today",
+        message: 'Дата начала промоакции должна быть не более чем три дня назад'
+    )]    private ?\DateTimeImmutable $promoStartDate = null;
 
     #[ORM\Column]
+    #[Assert\NotNull(message: 'Поле "promoFinishDate" не должно быть пустым')]
+    #[Assert\GreaterThan(
+                        value: "today",
+                        message: 'Дата конца промо акции должна быть больше или равна текущей дате'
+    )]
     private ?\DateTimeImmutable $promoFinishDate = null;
 
-    #[ORM\Column(type: 'string', enumType: OrganisationType::class)]
-    private OrganisationType|null $paymentOrganisation = null;
+    #[ORM\Column(type: 'string')]
+    #[Assert\Choice(choices: OrganisationType::CHOICES, message: 'Неверное значение для поля "paymentOrganisation"')]
+    private ?string $paymentOrganisation = null;
 
     #[ORM\Column]
+    #[Assert\NotNull(message: 'Поле "isActive" не должно быть пустым')]
     private ?bool $isActive = null;
 
-    #[ORM\OneToMany(targetEntity: Bonus::class, mappedBy: 'promoId')]
+    #[ORM\OneToMany(targetEntity: Bonus::class, mappedBy: 'promo', cascade: ['remove', 'persist'])]
+    #[Assert\Valid]
     private Collection $bonuses;
 
-    #[ORM\OneToMany(targetEntity: GeneralPromoCode::class, mappedBy: 'promoId')]
+    #[ORM\OneToMany(targetEntity: GeneralPromoCode::class, mappedBy: 'promo', cascade: ['remove', 'persist'])]
+    #[Assert\Valid]
     private Collection $generalPromoCodes;
 
-    #[ORM\OneToMany(targetEntity: Action::class, mappedBy: 'promoId')]
+    #[ORM\OneToMany(targetEntity: Action::class, mappedBy: 'promo', cascade: ['remove', 'persist'])]
+    #[Assert\Valid]
     private Collection $actions;
 
-    #[ORM\OneToMany(targetEntity: Restriction::class, mappedBy: 'promoId')]
+    #[ORM\OneToMany(targetEntity: Restriction::class, mappedBy: 'promo', cascade: ['remove', 'persist'])]
+    #[Assert\Valid]
     private Collection $restrictions;
 
     public function __construct()
@@ -209,24 +245,24 @@ class Promotion
         return $this;
     }
 
-    public function getPromoType(): PromoType
+    public function getPromoType(): ?string
     {
         return $this->promoType;
     }
 
-    public function setPromoType(PromoType $promoType): static
+    public function setPromoType(?string $promoType): static
     {
         $this->promoType = $promoType;
 
         return $this;
     }
 
-    public function getСashbackType(): CashbackType
+    public function getCashbackType(): ?string
     {
         return $this->cashbackType;
     }
 
-    public function setСashbackType(CashbackType $cashbackType): static
+    public function setCashbackType(?string $cashbackType): static
     {
         $this->cashbackType = $cashbackType;
 
@@ -305,12 +341,12 @@ class Promotion
         return $this;
     }
 
-    public function getPaymentOrganisation(): OrganisationType
+    public function getPaymentOrganisation(): ?string
     {
         return $this->paymentOrganisation;
     }
 
-    public function setPaymentOrganisation(OrganisationType $paymentOrganisation): static
+    public function setPaymentOrganisation(?string $paymentOrganisation): static
     {
         $this->paymentOrganisation = $paymentOrganisation;
 

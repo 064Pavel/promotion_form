@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ActionConditionRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ActionConditionRepository::class)]
 class ActionCondition
@@ -15,33 +16,47 @@ class ActionCondition
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Assert\NotNull(message: "Источник не может быть пустым")]
+    #[Assert\Positive(message: 'Значение поля "source" должно быть положительным числом')]
     private ?int $source = null;
 
     #[ORM\Column]
+    #[Assert\NotNull(message: "Код партнера не может быть пустым")]
+    #[Assert\Positive(message: 'Значение поля "partnerCode" должно быть положительным числом')]
     private ?int $partnerCode = null;
 
     #[ORM\Column]
+    #[Assert\NotNull(message: "Тип партнера не может быть пустым")]
+    #[Assert\Positive(message: 'Значение поля "partnerType" должно быть положительным числом')]
     private ?int $partnerType = null;
 
     #[ORM\Column(type: Types::ARRAY)]
+    #[Assert\Count(min: 1, minMessage: "Должен быть указан хотя бы один код продукта")]
     private array $productCode = [];
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Категория продукта не может быть пустой")]
     private ?string $productCategory = null;
 
     #[ORM\Column(type: Types::ARRAY)]
+    #[Assert\Count(min: 1, minMessage: "Должно быть указано хотя бы одно размещение")]
     private array $placement = [];
 
     #[ORM\Column]
+    #[Assert\NotNull(message: "Код активности не может быть пустым")]
+    #[Assert\Positive(message: 'Значение поля "activityCode" должно быть положительным числом')]
     private ?int $activityCode = null;
 
     #[ORM\Column(type: Types::ARRAY)]
+    #[Assert\Count(min: 1, minMessage: "Должен быть указан хотя бы один источник данных")]
     private array $dataSource = [];
 
     #[ORM\Column(type: Types::ARRAY)]
+    #[Assert\Count(min: 1, minMessage: "Должна быть указана хотя бы одна единица измерения страницы")]
     private array $pageUnit = [];
 
     #[ORM\Column(type: Types::ARRAY)]
+    #[Assert\Count(min: 1, minMessage: "Должно быть указано хотя бы одно имя оплаты")]
     private array $payFromName = [];
 
     #[ORM\ManyToOne(inversedBy: 'actionConditions')]

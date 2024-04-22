@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\BonusRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BonusRepository::class)]
 class Bonus
@@ -14,9 +15,15 @@ class Bonus
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Assert\NotNull(message: 'Поле "bonusNumber" не должно быть пустым')]
+    #[Assert\Type(type: 'integer', message: 'Значение поля "bonusNumber" должно быть целым числом')]
+    #[Assert\Positive(message: 'Значение поля "bonusNumber" должно быть положительным')]
     private ?int $bonusNumber = null;
 
     #[ORM\Column]
+    #[Assert\NotNull(message: 'Поле "bonusSum" не должно быть пустым')]
+    #[Assert\Type(type: 'integer', message: 'Значение поля "bonusSum" должно быть целым числом')]
+    #[Assert\Positive(message: 'Значение поля "bonusSum" должно быть положительным')]
     private ?int $bonusSum = null;
 
     #[ORM\ManyToOne(inversedBy: 'bonuses')]

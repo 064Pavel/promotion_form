@@ -28,7 +28,8 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Promotion Form');
+            ->setTitle('Promotion Form')
+            ->renderContentMaximized();
     }
 
     public function configureMenuItems(): iterable
