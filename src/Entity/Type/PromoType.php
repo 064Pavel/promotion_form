@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Entity\Type;
+
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Embeddable]
@@ -15,6 +16,7 @@ class PromoType
         self::PURCHASE_BONUS,
         self::COUPON,
     ];
+
     public static function choices(): array
     {
         return [

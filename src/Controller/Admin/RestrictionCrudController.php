@@ -8,8 +8,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class RestrictionCrudController extends AbstractCrudController
 {
@@ -31,21 +29,21 @@ class RestrictionCrudController extends AbstractCrudController
         ];
     }
 
-//    #[ORM\Column]
-//    private ?int $numberClientParticipation = null;
-//
-//    #[ORM\Column]
-//    private ?int $numberClientParticipationProductType = null;
-//
-//    #[ORM\Column]
-//    private ?int $numberClientParticipationPartnerCode = null;
-//
-//    #[ORM\Column]
-//    private ?bool $isLimited = null;
-//
-//    #[ORM\Column]
-//    private ?int $amountLimit = null;
-//
-//    #[ORM\Column(type: Types::ARRAY)]
-//    private array $clientGeo = [];
+    //    #[ORM\Column]
+    //    private ?int $numberClientParticipation = null;
+    //
+    //    #[ORM\Column]
+    //    private ?int $numberClientParticipationProductType = null;
+    //
+    //    #[ORM\Column]
+    //    private ?int $numberClientParticipationPartnerCode = null;
+    //
+    //    #[ORM\Column]
+    //    private ?bool $isLimited = null;
+    //
+    //    #[ORM\Column]
+    //    private ?int $amountLimit = null;
+    //
+    //    #[ORM\Column(type: Types::ARRAY)]
+    //    private array $clientGeo = [];
 }

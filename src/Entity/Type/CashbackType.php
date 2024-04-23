@@ -16,6 +16,7 @@ class CashbackType
         self::FIXED,
         self::NEXT_PURCHASE,
     ];
+
     public static function choices(): array
     {
         return [

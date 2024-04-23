@@ -16,6 +16,7 @@ class OrganisationType
         self::SBERBANK,
         self::ALFABANK,
     ];
+
     public static function choices(): array
     {
         return [
@@ -25,4 +26,3 @@ class OrganisationType
         ];
     }
 }
-

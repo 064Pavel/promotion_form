@@ -16,21 +16,21 @@ class GeneralPromoCode
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: "Поле Promo Code не может быть пустым")]
-    #[Assert\Length(max: 255, maxMessage: "Длина Promo Code не может превышать 255 символов")]
+    #[Assert\NotBlank(message: 'Поле Promo Code не может быть пустым')]
+    #[Assert\Length(max: 255, maxMessage: 'Длина Promo Code не может превышать 255 символов')]
     private ?string $promoCode = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Assert\Length(max: 65535, maxMessage: "Длина Add Info не может превышать 65535 символов")]
+    #[Assert\Length(max: 65535, maxMessage: 'Длина Add Info не может превышать 65535 символов')]
     private ?string $addInfo = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    #[Assert\NotBlank(message: "Поле Timestamp Expire не может быть пустым")]
-    #[Assert\GreaterThan("today", message: "Дата и время истечения должны быть больше текущей даты и времени")]
+    #[Assert\NotBlank(message: 'Поле Timestamp Expire не может быть пустым')]
+    #[Assert\GreaterThan('today', message: 'Дата и время истечения должны быть больше текущей даты и времени')]
     private ?\DateTimeInterface $timestampExpire = null;
 
     #[ORM\Column]
-    #[Assert\GreaterThanOrEqual(value: 0, message: "Promo Amount должен быть больше или равен нулю")]
+    #[Assert\GreaterThanOrEqual(value: 0, message: 'Promo Amount должен быть больше или равен нулю')]
     private ?int $promoAmount = null;
 
     #[ORM\ManyToOne(inversedBy: 'generalPromoCodes')]

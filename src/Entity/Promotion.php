@@ -52,7 +52,7 @@ class Promotion
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     #[Assert\NotNull(message: 'Поле "randomSelectionDate" не должно быть пустым')]
-    #[Assert\GreaterThan("today", message: 'Дата должна быть больше или равна текущей дате')]
+    #[Assert\GreaterThan('today', message: 'Дата должна быть больше или равна текущей дате')]
     private ?\DateTimeInterface $randomSelectionDate = null;
 
     #[ORM\Column]
@@ -88,15 +88,14 @@ class Promotion
     #[ORM\Column]
     #[Assert\NotNull(message: 'Поле "promoStartDate" не должно быть пустым')]
     #[Assert\LessThanOrEqual(
-        value: "today",
+        value: 'today',
         message: 'Дата начала промоакции должна быть не более чем три дня назад'
-    )]    private ?\DateTimeImmutable $promoStartDate = null;
-
+    )] private ?\DateTimeImmutable $promoStartDate = null;
     #[ORM\Column]
     #[Assert\NotNull(message: 'Поле "promoFinishDate" не должно быть пустым')]
     #[Assert\GreaterThan(
-                        value: "today",
-                        message: 'Дата конца промо акции должна быть больше или равна текущей дате'
+        value: 'today',
+        message: 'Дата конца промо акции должна быть больше или равна текущей дате'
     )]
     private ?\DateTimeImmutable $promoFinishDate = null;
 

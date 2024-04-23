@@ -9,7 +9,7 @@ use Doctrine\Persistence\ObjectManager;
 
 class BonusFixtures extends Fixture
 {
-    public function __construct(private FakerToolsInterface $fakerTools, )
+    public function __construct(private FakerToolsInterface $fakerTools)
     {
     }
 
@@ -17,7 +17,7 @@ class BonusFixtures extends Fixture
     {
         $faker = $this->fakerTools->getFaker();
 
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 5; ++$i) {
             $bonus = new Bonus();
             $bonus->setBonusSum($faker->numberBetween(99, 9999));
             $bonus->setBonusNumber($faker->numberBetween(1, 5));
